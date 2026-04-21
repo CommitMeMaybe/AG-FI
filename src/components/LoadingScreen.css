@@ -1,0 +1,164 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0d1f0d 0%, #1a3a1a 50%, #0a1a0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loading-logo {
+  width: 80px;
+  height: 80px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.logo-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(27, 94, 32, 0.5));
+}
+
+.logo-line {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: drawLine 1s ease-out forwards;
+}
+
+.logo-dot {
+  opacity: 0;
+  animation: fadeInDot 0.3s ease-out forwards;
+}
+
+.logo-dot:nth-child(2) { animation-delay: 0.4s; }
+.logo-dot:nth-child(3) { animation-delay: 0.6s; }
+.logo-dot:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeInDot {
+  to { opacity: 1; }
+}
+
+.logo-bar {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 8;
+  animation: growBar 0.5s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes growBar {
+  to { stroke-dashoffset: 0; }
+}
+
+.loading-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.loading-brand {
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #a5d6a7;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(165, 214, 167, 0.3);
+}
+
+.loading-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  color: #6a8f6a;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 200px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(165, 214, 167, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2e7d32 0%, #4caf50 50%, #81c784 100%);
+  border-radius: 2px;
+  transition: width 0.15s ease-out;
+  position: relative;
+}
+
+.progress-glow {
+  position: absolute;
+  top: -4px;
+  width: 20px;
+  height: 12px;
+  background: radial-gradient(ellipse at center, rgba(76, 175, 80, 0.6) 0%, transparent 70%);
+  transform: translateX(-50%);
+  transition: left 0.15s ease-out;
+  animation: glowPulse 1s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.progress-value {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4caf50;
+  letter-spacing: 0.05em;
+}
+
+.loading-screen.complete .loading-content {
+  animation: scaleOut 0.4s ease-out forwards;
+}
+
+@keyframes scaleOut {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.1); opacity: 0; }
+}
+
+.loading-screen.complete {
+  animation: fadeOut 0.4s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
