@@ -1,0 +1,22 @@
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.empty-illustration {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.5rem;
+  color: var(--earth-800);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: var(--earth-600);
+  max-width: 400px;
+  margin: 0 auto;
+}

@@ -1,0 +1,88 @@
+.risk-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.risk-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--earth-800);
+}
+
+.location-badge {
+  color: var(--earth-100);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.crop-badge {
+  background: var(--green-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.risk-score-display {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: var(--risk-bg);
+}
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 6px solid var(--risk-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: white;
+}
+
+.score-number {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--risk-color);
+}
+
+.score-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--earth-600);
+  margin-top: 0.25rem;
+}
+
+.risk-info h2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+
+.risk-level--low {
+  color: #166534;
+}
+
+.risk-level--moderate {
+  color: #a16207;
+}
+
+.risk-level--high {
+  color: #dc2626;
+}
+
+.risk-info p {
+  font-size: 1.1rem;
+  color: var(--earth-700);
+}
