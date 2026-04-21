@@ -13,7 +13,7 @@ import { validateCity, sanitizeErrorMessage, encodeURIComponentSafe } from './ut
 import { apiRateLimiter } from './utils/rateLimiter'
 import './App.css'
 
-const API_KEY = import.meta.env.VITE_API_KEY || ''
+const API_KEY = '4d8fb5b93d4af21d66a2948710284366'
 
 function App() {
   const [city, setCity] = useState('')
@@ -26,7 +26,11 @@ function App() {
   const [error, setError] = useState(null)
 
   const fetchWeatherData = useCallback(async (cityValue, cropValue) => {
+    console.log('=== FETCH START ===')
+    console.log('cityValue:', cityValue)
+    
     const rateCheck = apiRateLimiter.isAllowed()
+    console.log('rateCheck:', rateCheck)
     if (!rateCheck.allowed) {
       setError('Too many requests. Please wait a moment before trying again.')
       setLoading(false)
@@ -34,12 +38,14 @@ function App() {
     }
 
     const validation = validateCity(cityValue)
+    console.log('validation:', validation)
     if (!validation.valid) {
       setError(validation.error)
       setLoading(false)
       return
     }
 
+    console.log('API_KEY:', API_KEY ? 'present' : 'MISSING!')
     if (!API_KEY) {
       setError('Service temporarily unavailable. Please try again later.')
       setLoading(false)
@@ -61,15 +67,22 @@ function App() {
         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${encodedCity},NG&appid=${API_KEY}&units=metric`)
       ])
 
-      if (!r1.ok || !r2.ok) {
-        throw new Error('Service unavailable. Please try again later.')
+      if (!r1.ok) {
+        const errText = await r1.text()
+        throw new Error(`Weather API error (${r1.status}): ${errText.slice(0, 100)}`)
+      }
+      if (!r2.ok) {
+        const errText = await r2.text()
+        throw new Error(`Forecast API error (${r2.status}): ${errText.slice(0, 100)}`)
       }
 
       const [current, forecastData] = await Promise.all([r1.json(), r2.json()])
 
-      if (current.cod === '404') throw new Error('City not found. Please check the spelling or select from the list.')
-      if (current.cod === '401' || current.cod === '429') throw new Error('Service temporarily unavailable. Please try again later.')
-      if (current.cod !== '200') throw new Error('Unable to retrieve weather data.')
+      console.log('current.cod:', current.cod, typeof current.cod)
+      
+      if (current.cod === 404) throw new Error('City not found. Please check the spelling or select from the list.')
+      if (current.cod === 401 || current.cod === 429) throw new Error('Service temporarily unavailable. Please try again later.')
+      if (current.cod !== 200) throw new Error(`Unable to retrieve weather data. Got cod: ${current.cod}`)
       
       const calculatedRiskScore = calculateRisk(current, forecastData.list, cropValue)
       const riskLevel = getRiskLevel(calculatedRiskScore)

@@ -21,6 +21,10 @@ class RateLimiter {
     }
   }
 
+  reset() {
+    this.requests = []
+  }
+
   getTimeUntilNextRequest() {
     if (this.requests.length === 0) return 0
     const oldest = Math.min(...this.requests)
